@@ -3,10 +3,11 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ApiResource(
@@ -21,45 +22,47 @@ class Book
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"book_read"})
      */
     private $id;
 
     /**
      * @var string Book's reference
+     * @Groups({"book_read","book_write"})
      * @ORM\Column(type="string", length=255)
-     * @Groups({"book_read", "book_write", "author_get_read", "authors_get_read"})
      */
     private $reference;
 
     /**
+     * @Groups({"book_read","book_write"})
      * @ORM\Column(type="string", length=255)
-     * @Groups({"book_read", "book_write", "author_get_read", "authors_get_read"})
      */
     private $name;
 
     /**
+     * @Groups({"book_read","book_write"})
      * @ORM\Column(type="string", length=255)
-     * @Groups({"book_read", "book_write"})
      */
     private $description;
 
     /**
+     * @Groups({"book_read","book_write"})
      * @ORM\Column(type="datetime")
-     * @Groups({"book_read", "book_write", "author_get_read"})
      */
     private $publicationDate;
 
     /**
+     * @Groups({"book_read","book_write"})
      * @var string Author's foreign key
      * @ORM\ManyToOne(targetEntity="App\Entity\Author", inversedBy="books")
-     * ApiSubresource()
-     * @Groups({"book_read"})
+     * @ApiSubresource()
      */
     private $author;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Copybook", mappedBy="book")
-     * @Groups({"book_read"})
+     * ApiSubresource()
+     * @Groups({"book_read","book_write"})
      */
     private $copybooks;
 
