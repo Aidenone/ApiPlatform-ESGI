@@ -2,26 +2,26 @@
 
 namespace App\DataFixtures;
 
+use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\Persistence\ObjectManager;
 use App\Entity\Author;
 use App\Entity\Book;
 use App\Entity\Borrow;
 use App\Entity\Borrower;
 use App\Entity\Copybook;
 use App\Entity\User;
-use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\Persistence\ObjectManager;
 use Faker;
 
 class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-    	$faker = Faker\Factory::create('fr_FR');
-    	$populator = new Faker\ORM\Doctrine\Populator($faker, $manager);
-        $populator->addEntity(User::class, 10); 
+        $faker = Faker\Factory::create('fr_FR');
+        $populator = new Faker\ORM\Doctrine\Populator($faker, $manager);
+        $populator->addEntity(User::class, 10);
         $insertedPKs = $populator->execute();
 
-        for ($i = 0; $i < 10; $i++) {
+        for ($i=0; $i < 10; $i++) {
             $author = new Author();
             $author->setLastname($faker->lastName);
             $author->setFirstname($faker->firstName);
@@ -37,7 +37,7 @@ class AppFixtures extends Fixture
             $manager->persist($book);
 
             $copybook = new Copybook();
-            $copybook->setCopybookNumber($faker->randomNumber(3));
+            $copybook->setCopyBookNumber($faker->randomNumber(3));
             $copybook->setBook($book);
             $manager->persist($copybook);
 
@@ -56,8 +56,8 @@ class AppFixtures extends Fixture
             $borrow->setBorrowers($borrower);
             $borrow->setCopybook($copybook);
             $manager->persist($borrow);
-        }
+          }
 
-        $manager->flush();
+    $manager->flush();
     }
 }

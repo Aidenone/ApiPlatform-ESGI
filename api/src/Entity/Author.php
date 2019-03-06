@@ -3,29 +3,30 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ApiResource(
  *     normalizationContext={"groups"={"author_read"}},
  *     denormalizationContext={"groups"={"author_write"}},
- *     collectionOperations={
+ *     collectionOperations = {
  *          "get"={
  *              "normalization_context"={"groups"={"authors_get_read"}}
  *          },
  *          "post"
- *      },
- *     itemOperations={
- *          "get"={
- *              "normalization_context"={"groups"={"author_get_read"}}
  *          },
- *          "put",
- *          "delete"
- *      }
- * ) 
+ *          itemOperations = {
+    *          "get"={
+ *              "normalization_context"={"groups"={"author_get_read"}}
+ *              },
+    *          "put",
+    *          "delete"
+ *          }
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\AuthorRepository")
  */
 class Author
@@ -34,32 +35,30 @@ class Author
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"book_read", "author_write", "author_read", "author_get_read", "authors_get_read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"book_read", "author_write", "author_read", "author_get_read", "authors_get_read"})
+     * @Groups({"book_read", "author_read", "author_write", "authors_get_read","author_get_read"})
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"book_read", "author_write", "author_read", "author_get_read", "authors_get_read"})
+     * @Groups({"book_read", "author_read", "author_write", "authors_get_read","author_get_read"})
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"book_read", "author_write", "author_read"})
+     * @Groups({"book_read"})
      */
     private $age;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Book", mappedBy="author")
-     * ApiSubresource()
-     * @Groups({"author_write", "author_read", "author_get_read"})
+     * @Groups({"author_get_read"})
      */
     private $books;
 

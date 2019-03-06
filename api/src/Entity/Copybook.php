@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource()
@@ -19,9 +20,10 @@ class Copybook
     private $id;
 
     /**
+     * @Groups({"book_read"})
      * @ORM\Column(type="integer")
      */
-    private $copybookNumber;
+    private $copyBookNumber;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Book", inversedBy="copybooks")
@@ -33,24 +35,24 @@ class Copybook
         return $this->id;
     }
 
-    public function getCopybookNumber(): ?int
+    public function getCopyBookNumber(): ?int
     {
-        return $this->copybookNumber;
+        return $this->copyBookNumber;
     }
 
-    public function setCopybookNumber(int $copybookNumber): self
+    public function setCopyBookNumber(int $copyBookNumber): self
     {
-        $this->copybookNumber = $copybookNumber;
+        $this->copyBookNumber = $copyBookNumber;
 
         return $this;
     }
 
-    public function getBook(): ?Book
+    public function getBook(): ?book
     {
         return $this->book;
     }
 
-    public function setBook(?Book $book): self
+    public function setBook(?book $book): self
     {
         $this->book = $book;
 
